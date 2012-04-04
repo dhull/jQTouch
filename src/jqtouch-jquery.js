@@ -62,7 +62,7 @@
             deltaY = 0,
             deltaT = 0;
 
-        touch = SUPPORT_TOUCH? event.changedTouches[0]: event;
+        touch = SUPPORT_TOUCH ? window.event.changedTouches[0] : (window.event || e);
         startX = touch.pageX;
         startY = touch.pageY;
 
@@ -88,7 +88,7 @@
         }
 
         function touchEndHandler(e) {
-            // updateChanges();
+            // updateChanges(e);
             unbindEvents($el);
             clearTimeout(hoverTimeout);
             clearTimeout(pressTimeout);
@@ -104,7 +104,7 @@
         }
 
         function touchMoveHandler(e) {
-            updateChanges();
+            updateChanges(e);
             var absX = Math.abs(deltaX);
             var absY = Math.abs(deltaY);
             var direction;
@@ -124,8 +124,8 @@
             }
         }
 
-        function updateChanges() {
-            var firstFinger = SUPPORT_TOUCH? event.changedTouches[0]: event; 
+        function updateChanges(e) {
+            var firstFinger = SUPPORT_TOUCH ? window.event.changedTouches[0] : (window.event || e); 
             deltaX = firstFinger.pageX - startX;
             deltaY = firstFinger.pageY - startY;
             deltaT = new Date().getTime() - startTime;
